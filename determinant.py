@@ -12,6 +12,15 @@ class MatrixDeterminantSolver:
 
         self.matrix = initialMatrix
 
+    def isFirstColumnDividable(self):
+        self.zeroCount = 0
+        for matrixRow in self.matrix:
+            if matrixRow[0] == 0:
+                self.zeroCount += 1
+
+        return self.zeroCount != len(self.matrix)
+
+
     def checkMatrix(self):
         matrixLength = len(self.matrix)
         for matrixRow in self.matrix:
@@ -19,6 +28,7 @@ class MatrixDeterminantSolver:
                 self.zeroCount += 1
             if len(matrixRow) != matrixLength:
                 return False
+
         return matrixLength > 0
 
     def isFirstRowFirstItemOne(self):
@@ -37,7 +47,7 @@ class MatrixDeterminantSolver:
                 row[index] = item - multiplier * firstRow[index]
 
     def solveDeterminant(self):
-        if self.zeroCount == len(self.matrix):
+        if not self.isFirstColumnDividable():
             return 0
 
         if len(self.matrix) == 1:
@@ -88,6 +98,13 @@ testMatrices = [
         [-2, 2, -8, 0]
         # -104
     ],
+[
+        [2, 0, 0, 6],
+        [4, 0, 6, 7],
+        [3, 0, 1, 2],
+        [0, 0, 0, 0]
+        # 0
+    ],
     [
         [2, -4, 0, 6],
         [4, -5, 6, 7],
@@ -98,6 +115,10 @@ testMatrices = [
     [
         [1, 2], [3, 4]
         # -2
+    ],
+[
+        [1, 0], [3, 0]
+        # 0
     ],
     [
         [-562, 40, 43, -586, 347],
@@ -117,3 +138,6 @@ for matrix in testMatrices:
         print(solver.solveDeterminant())
     else:
         print("Not square matrix")
+
+arr2d = [[j for j in input().strip()] for i in range(2)]
+print(arr2d)
